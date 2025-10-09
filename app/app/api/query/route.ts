@@ -168,14 +168,22 @@ SQL:`;
         sql: sql,
         data: [],
         message: "Query executed successfully but returned no results.",
-        executionTime: `${executionTime}ms`
+        executionTime: executionTime
       });
     }
 
+    // Convert BigInt to string for JSON serialization
+    const serializedData = JSON.parse(
+      JSON.stringify(
+        Array.isArray(data) ? data : [data],
+        (key, value) => (typeof value === 'bigint' ? value.toString() : value)
+      )
+    );
+
     return NextResponse.json({
       sql: sql,
-      data: Array.isArray(data) ? data : [data],
-      executionTime: `${executionTime}ms`,
+      data: serializedData,
+      executionTime: executionTime,
       rowCount: Array.isArray(data) ? data.length : 1
     });
 
