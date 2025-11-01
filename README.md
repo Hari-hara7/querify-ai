@@ -1,6 +1,6 @@
 # Querify AI
 
-<img src="https://img.shields.io/badge/Next.js-14-black?logo=next.js"> <img src="https://img.shields.io/badge/TypeScript-5-blue?logo=typescript"> <img src="https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&amp;logoColor=white">
+<img src="https://img.shields.io/badge/Next.js-15-black?logo=next.js"> <img src="https://img.shields.io/badge/TypeScript-5-blue?logo=typescript"> <img src="https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&amp;logoColor=white">
 
 A clean, well-documented starting point for this TypeScript/Next.js project.
 
@@ -10,7 +10,6 @@ This README provides:
 - Common scripts and developer workflow
 - A quick tour of the project structure
 
-> Note: If you need specific details about architecture or deployment for your environment, feel free to add them in the sections below.
 
 ## Features
 - Modern Next.js setup (TypeScript-ready)
