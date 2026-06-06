@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
     // Initialize Gemini AI
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-2.0-flash-exp",
+      model: "gemini-2.5-flash",
       generationConfig: {
         temperature: 0.1, // Lower temperature for more consistent SQL generation
         maxOutputTokens: 500,

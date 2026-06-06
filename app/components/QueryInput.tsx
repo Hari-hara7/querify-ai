@@ -28,33 +28,33 @@ export default function QueryInput({
   };
 
   return (
-    <Card className="bg-zinc-900 border-zinc-800">
-      <CardHeader>
+    <Card className="border-zinc-800 bg-zinc-950">
+      <CardHeader className="p-4 sm:p-6">
         <CardTitle className="text-white">Ask a Question</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 p-4 pt-0 sm:p-6 sm:pt-0">
         <Textarea
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="e.g., Show me the top 5 customers by total orders..."
-          className="min-h-[120px] bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500 resize-none"
+          className="min-h-32 resize-none border-zinc-800 bg-black text-white placeholder-zinc-500 focus-visible:ring-zinc-600"
         />
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row">
           <Button
             onClick={onRun}
             disabled={!question.trim() || isLoading}
-            className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+            className="flex-1 bg-white text-black hover:bg-zinc-200"
           >
-            <Play className="w-4 h-4 mr-2" />
+            <Play className="mr-2 h-4 w-4" />
             Run Query
           </Button>
           <Button
             onClick={onClear}
             variant="outline"
-            className="bg-zinc-800 text-zinc-300 border-zinc-700 hover:bg-zinc-700"
+            className="border-zinc-800 bg-black text-zinc-300 hover:bg-zinc-900 hover:text-white"
           >
-            <Trash2 className="w-4 h-4 mr-2" />
+            <Trash2 className="mr-2 h-4 w-4" />
             Clear
           </Button>
         </div>

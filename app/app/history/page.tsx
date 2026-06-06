@@ -39,39 +39,40 @@ export default function HistoryPage() {
   );
 
   return (
-    <div className="min-h-screen bg-black">
-      <div className="max-w-7xl mx-auto p-6">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+    <div className="min-h-screen text-white">
+      <div className="mx-auto max-w-[1600px] space-y-6 lg:space-y-8">
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-2xl shadow-black/20 backdrop-blur sm:p-6 lg:p-8">
+          <h1 className="mb-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl lg:text-4xl">
             Query History
           </h1>
-          <p className="text-zinc-400">
-            View and search through your past queries
+          <p className="max-w-2xl text-sm leading-6 text-zinc-400 sm:text-base">
+            View and search through your past queries with a layout that scales
+            from phone to desktop.
           </p>
         </div>
 
-        <div className="mb-6 flex items-center gap-4">
+        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-zinc-500" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
             <Input
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search queries..."
-              className="pl-10 bg-zinc-900 border-zinc-800 text-white placeholder-zinc-500"
+              className="border-white/10 bg-white/5 pl-10 text-white placeholder-zinc-500"
             />
           </div>
           <Button
             onClick={clearHistory}
             variant="outline"
-            className="bg-zinc-900 border-zinc-800 text-zinc-300 hover:bg-zinc-800"
+            className="border-white/10 bg-white/5 text-zinc-300 hover:bg-white/10 hover:text-white"
           >
-            <Trash2 className="w-4 h-4 mr-2" />
+            <Trash2 className="mr-2 h-4 w-4" />
             Clear All
           </Button>
         </div>
 
         {filteredHistory.length === 0 ? (
-          <Card className="bg-zinc-900 border-zinc-800">
+          <Card className="border-white/10 bg-white/5 backdrop-blur">
             <CardContent className="py-12 text-center">
               <p className="text-zinc-400">No queries found</p>
             </CardContent>
@@ -79,20 +80,20 @@ export default function HistoryPage() {
         ) : (
           <div className="space-y-4">
             {filteredHistory.map((item, index) => (
-              <Card key={index} className="bg-zinc-900 border-zinc-800">
+              <Card key={index} className="border-white/10 bg-white/5 backdrop-blur">
                 <CardHeader>
-                  <div className="flex items-start justify-between">
+                  <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
                       <CardTitle className="text-white text-base mb-2">
                         {item.question}
                       </CardTitle>
-                      <div className="flex items-center gap-3 text-xs text-zinc-500">
+                      <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-500">
                         <span className="flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
+                          <Clock className="h-3 w-3" />
                           {new Date(item.timestamp).toLocaleString()}
                         </span>
                         {item.executionTime && (
-                          <Badge className="bg-emerald-950/30 border-emerald-700 text-emerald-400">
+                          <Badge className="border-zinc-700 bg-black text-zinc-300">
                             {item.executionTime}ms
                           </Badge>
                         )}
@@ -101,8 +102,8 @@ export default function HistoryPage() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <pre className="bg-black border border-zinc-800 rounded-lg p-4 overflow-x-auto">
-                    <code className="text-emerald-400 text-sm font-mono">
+                  <pre className="overflow-x-auto rounded-lg border border-zinc-800 bg-black p-4">
+                    <code className="font-mono text-sm text-zinc-200">
                       {item.sql}
                     </code>
                   </pre>

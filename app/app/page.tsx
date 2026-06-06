@@ -81,10 +81,27 @@ export default function Home() {
         body: JSON.stringify({ question: question.trim() }),
       });
 
-      const json = await res.json();
+      const contentType = res.headers.get("content-type") || "";
+      let json: any = null;
+
+      if (contentType.includes("application/json") || contentType.includes("application/ld+json")) {
+        // Safe to parse as JSON
+        try {
+          json = await res.json();
+        } catch (e) {
+          const text = await res.text();
+          setError("Invalid JSON response from server: " + (text?.slice?.(0, 200) || String(e)));
+          return;
+        }
+      } else {
+        // Non-JSON response (HTML error page or similar)
+        const text = await res.text();
+        setError("Server returned a non-JSON response: " + (text?.slice?.(0, 200) || "(empty)"));
+        return;
+      }
 
       if (!res.ok) {
-        setError(json.error || "Failed to execute query");
+        setError(json?.error || "Failed to execute query");
         return;
       }
 
@@ -151,60 +168,49 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <div className="max-w-7xl mx-auto p-6">
-        <div className="grid grid-cols-12 gap-6">
-          {/* History Sidebar */}
-          <div className="col-span-12 md:col-span-3">
-            <Card className="bg-zinc-900 border-zinc-800 sticky top-20">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center justify-between">
-                  <span>History</span>
-                  <span className="text-xs font-normal bg-zinc-800 text-zinc-300 px-2 py-1 rounded">
-                    {history.length}
-                  </span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-zinc-500" />
-                  <Input
-                    value={historySearch}
-                    onChange={(e) => setHistorySearch(e.target.value)}
-                    placeholder="Search history..."
-                    className="pl-10 bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500"
-                  />
-                </div>
-
-                <div className="space-y-2 max-h-[500px] overflow-y-auto">
-                  {filteredHistory.slice(0, 10).map((item, i) => (
-                    <div
-                      key={i}
-                      onClick={() => loadFromHistory(item)}
-                      className="p-3 bg-zinc-800 border border-zinc-700 rounded-lg cursor-pointer hover:bg-zinc-700 hover:border-blue-600 transition"
-                    >
-                      <p className="text-sm text-white line-clamp-2 mb-1">
-                        {item.question}
-                      </p>
-                      <div className="flex items-center justify-between text-xs text-zinc-400">
-                        <span>
-                          {new Date(item.timestamp).toLocaleDateString()}
-                        </span>
-                        {item.executionTime && (
-                          <span className="text-emerald-400">
-                            {item.executionTime}ms
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+    <div className="min-h-screen text-white">
+      <div className="mx-auto max-w-400 space-y-6 lg:space-y-8">
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-2xl shadow-black/20 backdrop-blur sm:p-6 lg:p-8">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl space-y-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-zinc-500">
+                Query workspace
+              </p>
+              <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl lg:text-4xl">
+                Ask questions in plain English and get clean SQL results.
+              </h2>
+              <p className="max-w-2xl text-sm leading-6 text-zinc-400 sm:text-base">
+                Review your history, inspect SQL, and analyze results in one
+                responsive workspace that stays usable on mobile, tablet, and
+                desktop.
+              </p>
+            </div>
+            <div className="grid grid-cols-3 gap-3 sm:max-w-md">
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
+                <p className="text-xs text-zinc-500">Saved</p>
+                <p className="mt-1 text-2xl font-semibold text-white">
+                  {history.length}
+                </p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
+                <p className="text-xs text-zinc-500">Rows</p>
+                <p className="mt-1 text-2xl font-semibold text-white">
+                  {data.length}
+                </p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
+                <p className="text-xs text-zinc-500">Time</p>
+                <p className="mt-1 text-2xl font-semibold text-white">
+                  {executionTime ? `${executionTime}ms` : "—"}
+                </p>
+              </div>
+            </div>
           </div>
+        </div>
 
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:gap-6">
           {/* Main Content */}
-          <div className="col-span-12 md:col-span-6 space-y-6">
+          <div className="space-y-4 lg:order-2 lg:col-span-6 lg:space-y-6">
             <QueryInput
               question={question}
               setQuestion={setQuestion}
@@ -216,8 +222,8 @@ export default function Home() {
             {/* Status Messages */}
             {loading && (
               <div className="space-y-3">
-                <Skeleton className="h-4 w-full bg-zinc-800" />
-                <Skeleton className="h-4 w-3/4 bg-zinc-800" />
+                <Skeleton className="h-4 w-full bg-zinc-900" />
+                <Skeleton className="h-4 w-3/4 bg-zinc-900" />
               </div>
             )}
 
@@ -228,7 +234,7 @@ export default function Home() {
             )}
 
             {message && !error && (
-              <Alert className="bg-emerald-950/30 border-emerald-700 text-emerald-300">
+              <Alert className="border-zinc-700 bg-zinc-950 text-zinc-200">
                 <AlertDescription>{message}</AlertDescription>
               </Alert>
             )}
@@ -252,16 +258,65 @@ export default function Home() {
             )}
           </div>
 
-          {/* Stats Sidebar */}
-          <div className="col-span-12 md:col-span-3">
-            {data.length > 0 && (
-              <StatsSidebar
-                data={data}
-                executionTime={executionTime}
-                numericKeys={numericKeys}
-              />
-            )}
-          </div>
+            {/* Stats Sidebar */}
+            <div className="lg:order-3 lg:col-span-3">
+              {data.length > 0 && (
+                <StatsSidebar
+                  data={data}
+                  executionTime={executionTime}
+                  numericKeys={numericKeys}
+                />
+              )}
+            </div>
+
+            {/* History Sidebar */}
+            <div className="lg:order-1 lg:col-span-3">
+              <Card className="border-white/10 bg-white/5 lg:sticky lg:top-24">
+                <CardHeader className="p-4 sm:p-6">
+                  <CardTitle className="flex items-center justify-between text-white">
+                    <span>History</span>
+                    <span className="rounded-full border border-white/10 bg-black/30 px-2.5 py-1 text-xs font-normal text-zinc-300">
+                      {history.length}
+                    </span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 p-4 pt-0 sm:p-6 sm:pt-0">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
+                    <Input
+                      value={historySearch}
+                      onChange={(e) => setHistorySearch(e.target.value)}
+                      placeholder="Search history..."
+                      className="border-white/10 bg-black/30 pl-10 text-white placeholder-zinc-500"
+                    />
+                  </div>
+
+                  <div className="max-h-72 space-y-2 overflow-y-auto lg:max-h-125">
+                    {filteredHistory.slice(0, 10).map((item, i) => (
+                      <div
+                        key={i}
+                        onClick={() => loadFromHistory(item)}
+                        className="cursor-pointer rounded-2xl border border-white/10 bg-black/25 p-3 transition hover:border-white/20 hover:bg-white/5"
+                      >
+                        <p className="mb-1 line-clamp-2 text-sm text-white">
+                          {item.question}
+                        </p>
+                        <div className="flex items-center justify-between gap-3 text-xs text-zinc-500">
+                          <span>
+                            {new Date(item.timestamp).toLocaleDateString()}
+                          </span>
+                          {item.executionTime && (
+                            <span className="text-zinc-300">
+                              {item.executionTime}ms
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
         </div>
       </div>
     </div>

@@ -25,7 +25,7 @@ interface ChartVisualizationProps {
   setChartType: (type: "bar" | "line" | "pie") => void;
 }
 
-const COLORS = ["#3b82f6", "#8b5cf6", "#ec4899", "#06b6d4", "#10b981"];
+const COLORS = ["#ffffff", "#a1a1aa", "#71717a", "#d4d4d8", "#52525b"];
 
 export default function ChartVisualization({
   data,
@@ -41,19 +41,19 @@ export default function ChartVisualization({
   );
 
   return (
-    <Card className="bg-zinc-900 border-zinc-800">
-      <CardHeader>
-        <div className="flex items-center justify-between">
+    <Card className="border-zinc-800 bg-zinc-950">
+      <CardHeader className="p-4 sm:p-6">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <CardTitle className="text-white">Visualization</CardTitle>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {(["bar", "line", "pie"] as const).map((type) => (
               <Badge
                 key={type}
                 onClick={() => setChartType(type)}
                 className={`cursor-pointer transition ${
                   chartType === type
-                    ? "bg-blue-950 text-blue-400 border-blue-700"
-                    : "bg-zinc-800 text-zinc-300 border-zinc-700 hover:bg-zinc-700"
+                    ? "border-white bg-white text-black"
+                    : "border-zinc-800 bg-black text-zinc-300 hover:bg-zinc-900"
                 }`}
               >
                 {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -62,7 +62,7 @@ export default function ChartVisualization({
           </div>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
         {chartType === "bar" && (
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={data}>

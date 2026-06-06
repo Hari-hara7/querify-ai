@@ -7,14 +7,14 @@ import AnimatedCard from "@/components/AnimatedCard";
 
 export default function DocsPage() {
   return (
-    <div className="min-h-screen bg-black">
-      <div className="max-w-5xl mx-auto p-6">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+    <div className="min-h-screen text-white">
+      <div className="mx-auto max-w-5xl space-y-6 lg:space-y-8">
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-2xl shadow-black/20 backdrop-blur sm:p-6 lg:p-8">
+          <h1 className="mb-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl lg:text-4xl">
             Documentation
           </h1>
-          <p className="text-zinc-400">
-            Learn how to use Querify AI effectively
+          <p className="max-w-2xl text-sm leading-6 text-zinc-400 sm:text-base">
+            Learn how to use Querify AI effectively on any screen size.
           </p>
         </div>
 
@@ -28,13 +28,13 @@ export default function DocsPage() {
             enableMagnetism={true}
             clickEffect={true}
             spotlightRadius={300}
-            glowColor="132, 0, 255"
+            glowColor="255, 255, 255"
           >
-            <Card className="bg-zinc-900 border-zinc-800">
+            <Card className="border-white/10 bg-white/5 backdrop-blur">
               <CardHeader>
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-blue-950/30 rounded-lg">
-                    <Zap className="w-5 h-5 text-blue-400" />
+                  <div className="rounded-lg border border-white/10 bg-black/30 p-2">
+                    <Zap className="h-5 w-5 text-white" />
                   </div>
                   <CardTitle className="text-white">Getting Started</CardTitle>
                 </div>
@@ -45,9 +45,9 @@ export default function DocsPage() {
                   using advanced AI. Simply type your question and let the AI do
                   the rest.
                 </p>
-                <div className="bg-black border border-zinc-800 rounded-lg p-4">
+                <div className="rounded-lg border border-white/10 bg-black/30 p-4">
                   <p className="text-sm text-zinc-400 mb-2">Example:</p>
-                  <p className="text-emerald-400 font-mono text-sm">
+                  <p className="font-mono text-sm text-zinc-200">
                     "Show me the top 5 customers by total orders"
                   </p>
                 </div>
@@ -64,13 +64,13 @@ export default function DocsPage() {
             enableMagnetism={true}
             clickEffect={true}
             spotlightRadius={300}
-            glowColor="132, 0, 255"
+            glowColor="255, 255, 255"
           >
-            <Card className="bg-zinc-900 border-zinc-800">
+            <Card className="border-white/10 bg-white/5 backdrop-blur">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-purple-950/30 rounded-lg">
-                  <Database className="w-5 h-5 text-purple-400" />
+                <div className="rounded-lg border border-white/10 bg-black/30 p-2">
+                  <Database className="h-5 w-5 text-white" />
                 </div>
                 <CardTitle className="text-white">Database Schema</CardTitle>
               </div>
@@ -79,7 +79,7 @@ export default function DocsPage() {
               <p>Our database consists of 4 main tables:</p>
               
               <div className="space-y-3">
-                <div className="bg-black border border-zinc-800 rounded-lg p-4">
+                <div className="rounded-lg border border-white/10 bg-black/30 p-4">
                   <h4 className="font-medium text-white mb-2">users</h4>
                   <p className="text-sm text-zinc-400">
                     Stores customer information
@@ -97,7 +97,7 @@ export default function DocsPage() {
                   </div>
                 </div>
 
-                <div className="bg-black border border-zinc-800 rounded-lg p-4">
+                <div className="rounded-lg border border-white/10 bg-black/30 p-4">
                   <h4 className="font-medium text-white mb-2">products</h4>
                   <p className="text-sm text-zinc-400">
                     Product catalog with pricing
@@ -115,7 +115,7 @@ export default function DocsPage() {
                   </div>
                 </div>
 
-                <div className="bg-black border border-zinc-800 rounded-lg p-4">
+                <div className="rounded-lg border border-white/10 bg-black/30 p-4">
                   <h4 className="font-medium text-white mb-2">orders</h4>
                   <p className="text-sm text-zinc-400">
                     Customer orders with dates and totals
@@ -136,7 +136,7 @@ export default function DocsPage() {
                   </div>
                 </div>
 
-                <div className="bg-black border border-zinc-800 rounded-lg p-4">
+                <div className="rounded-lg border border-white/10 bg-black/30 p-4">
                   <h4 className="font-medium text-white mb-2">order_items</h4>
                   <p className="text-sm text-zinc-400">
                     Individual items within orders
@@ -175,10 +175,10 @@ export default function DocsPage() {
             spotlightRadius={300}
             glowColor="132, 0, 255"
           >
-            <Card className="bg-zinc-900 border-zinc-800">
+            <Card className="border-white/10 bg-white/5 backdrop-blur">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-emerald-950/30 rounded-lg">
+                <div className="rounded-lg border border-white/10 bg-black/30 p-2">
                   <Code className="w-5 h-5 text-emerald-400" />
                 </div>
                 <CardTitle className="text-white">Query Examples</CardTitle>
@@ -187,12 +187,12 @@ export default function DocsPage() {
             <CardContent className="space-y-3 text-zinc-300">
               <div className="space-y-2">
                 <p className="text-sm text-zinc-400">Analytics queries:</p>
-                <div className="bg-black border border-zinc-800 rounded-lg p-3">
+                <div className="rounded-lg border border-white/10 bg-black/30 p-3">
                   <p className="text-sm text-emerald-400 font-mono">
                     What's the average order value?
                   </p>
                 </div>
-                <div className="bg-black border border-zinc-800 rounded-lg p-3">
+                <div className="rounded-lg border border-white/10 bg-black/30 p-3">
                   <p className="text-sm text-emerald-400 font-mono">
                     Show me total revenue by month
                   </p>
@@ -201,12 +201,12 @@ export default function DocsPage() {
 
               <div className="space-y-2">
                 <p className="text-sm text-zinc-400">Customer insights:</p>
-                <div className="bg-black border border-zinc-800 rounded-lg p-3">
+                <div className="rounded-lg border border-white/10 bg-black/30 p-3">
                   <p className="text-sm text-emerald-400 font-mono">
                     Who are the top 10 customers by spending?
                   </p>
                 </div>
-                <div className="bg-black border border-zinc-800 rounded-lg p-3">
+                <div className="rounded-lg border border-white/10 bg-black/30 p-3">
                   <p className="text-sm text-emerald-400 font-mono">
                     List customers who haven't ordered in 30 days
                   </p>
@@ -241,10 +241,10 @@ export default function DocsPage() {
             spotlightRadius={300}
             glowColor="132, 0, 255"
           >
-            <Card className="bg-zinc-900 border-zinc-800">
+            <Card className="border-white/10 bg-white/5 backdrop-blur">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-red-950/30 rounded-lg">
+                <div className="rounded-lg border border-white/10 bg-black/30 p-2">
                   <Shield className="w-5 h-5 text-red-400" />
                 </div>
                 <CardTitle className="text-white">Security</CardTitle>
@@ -285,10 +285,10 @@ export default function DocsPage() {
             spotlightRadius={300}
             glowColor="132, 0, 255"
           >
-            <Card className="bg-zinc-900 border-zinc-800">
+            <Card className="border-white/10 bg-white/5 backdrop-blur">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-cyan-950/30 rounded-lg">
+                <div className="rounded-lg border border-white/10 bg-black/30 p-2">
                   <TrendingUp className="w-5 h-5 text-cyan-400" />
                 </div>
                 <CardTitle className="text-white">Best Practices</CardTitle>
