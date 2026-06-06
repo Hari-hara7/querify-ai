@@ -176,6 +176,45 @@ The seed script creates:
 - Run `npx prisma db push` to create tables
 - Check that you're using the correct database
 
+### Common Next.js Build Errors
+
+1. **Module not found**
+```bash
+npm install <missing-package>
+# or check import paths for typos
+```
+
+2. **Type errors (TypeScript)**
+```js
+// Quick skip during build (not recommended long-term)
+// In next.config.js:
+typescript: { ignoreBuildErrors: true }
+```
+
+3. **use client / use server issues**
+- Add `"use client"` at the top of files using hooks or browser APIs
+- Do not import server-only code into client components
+
+4. **Environment variables missing**
+```bash
+# .env.local is not committed, so check all required vars are set
+# In Vercel/prod, add them in the dashboard
+```
+
+5. **Image or ESLint blocking build**
+```js
+// next.config.js
+eslint: { ignoreDuringBuilds: true }
+```
+
+6. **Port or cache issue (local)**
+```bash
+rm -rf .next
+npm run build
+```
+
+Drop your error message and I'll give you the exact fix.
+
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
